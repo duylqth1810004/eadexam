@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css"
+          th:href="@{bootstrap.min.css}">
+</head>
+<body>
+<div class="col-3"></div>
+<div class="container col-6">
+    <h1>People</h1>
+    <div class="col-md-auto">
+        <!--/*@thymesVar id="people" type="com.example.eadexam.entity.People"*/-->
+        <form th:object="${people}" method="POST" th:action="@{/save}">
+            <input type="hidden" th:field="*{id}" value="${people.id}">
+            <div>
+                <label th:text="Name" th:for="name"></label>
+                <input required type="text" class="form-control" value="${people.name}" th:field="*{name}" placeholder="Enter People Name"></input>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+
+            <div>
+                <label th:text="Address" th:for="address"></label>
+                <input required type="text" class="form-control" value="${people.address}" th:field="*{address}" placeholder="Enter People Address"></input>
+            </div>
+            <div style="clear: both; display: block; height: 10px"></div>
+
+            <!--Submit Button-->
+            <input type="submit" value="Save" class="btn btn-info">
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="col-3"></div>
+<div class="container col-6">
+    <h1>List of Peoples</h1>
+    <table class="table table-active">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Option</th>
+        </tr>
+        <tr th:each="peopleItem: ${peopleList}">
+            <td th:text="${peopleItem.id}"></td><br>
+            <td th:text="${peopleItem.name}"></td><br>
+            <td th:text="${peopleItem.address}"></td><br>
+            <td>
+                <a th:href="@{/edit?id={id}(id=${peopleItem.id})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/delete?id={id}(id=${peopleItem.id})}" class="btn btn-danger">Remove</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
